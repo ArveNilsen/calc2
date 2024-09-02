@@ -111,16 +111,8 @@ class CalcModel {
 }
 
 class CalcController {
-	constructor(model, view) {
+	constructor(model) {
 		this.model = model;
-		
-		const buttons = document.querySelectorAll(".div-btn");
-		buttons.forEach((button) => 
-			button.addEventListener("click", this.handleClick.bind(this)));
-	}
-
-	handleClick(event) {
-		this.processInput(event.target.innerText);
 	}
 
 	processInput(action) {
@@ -161,7 +153,19 @@ class CalcController {
 
 class CalcView {
 	constructor() {
+		this.controller = null;
 		this.displayRef = document.querySelector(".display");
+		const buttons = document.querySelectorAll(".div-btn");
+		buttons.forEach((button) => 
+			button.addEventListener("click", this.handleClick.bind(this)));
+	}
+
+	registerController(controller) {
+		this.controller = controller;
+	}
+
+	handleClick(event) {
+		this.controller.processInput(event.target.innerText);
 	}
 
 	setDisplay(result) {
